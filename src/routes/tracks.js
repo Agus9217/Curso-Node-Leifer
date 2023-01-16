@@ -1,11 +1,14 @@
 const express = require('express')
-const { getItems, getItem, createItems } = require('../controller/tracksController')
-const { validatorCreateItem } = require('../validators/tracksValidator')
+const { getItems, getItem, createItems, updateItems, deleteItems } = require('../controller/tracksController')
+const { validatorCreateItem, validatorGetItem } = require('../validators/tracksValidator')
 const router = express.Router()
 
-router.get("/", getItems)
-router.get("/:id", getItem)
-router.post("/", validatorCreateItem, createItems)
+router
+  .get("/", getItems)
+  .get("/:id", validatorGetItem, getItem)
+  .post("/", validatorCreateItem, createItems)
+  .put('/:id', validatorGetItem, validatorCreateItem, updateItems)
+  .delete('/:id', validatorGetItem, deleteItems)
 
 
 module.exports = router
