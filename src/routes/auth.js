@@ -3,6 +3,7 @@ const { usersModel } = require('../models')
 const { matchedData } = require('express-validator')
 const { encrypt } = require('../utils/handlePassword')
 const { validatorRegister } = require('../validators/authValidator')
+const { tokenSign } = require('../validators/handleJwt')
 const router = express.Router()
 
 router
@@ -10,8 +11,15 @@ router
     req = matchedData(req)
     const passwordHash = await encrypt(req.password)
     const body = { ...req, password: passwordHash }
-    const data = await usersModel.create(body)
-    data.set('password', undefined, { strict: false })
+    const dataUser = await usersModel.create(body)
+    dataUser.set('password', undefined, { strict: false })
+
+    const data = {
+      token: await tokenSign(),
+      user: dataUser
+    }
+
+
     res.send({ data })
   })
 
