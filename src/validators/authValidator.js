@@ -42,4 +42,4 @@ const validatorLogin = [
   (req, res, next) => validateResults(req, res, next)
 ]
 
-module.exports = { validatorRegister }
+module.exports = { validatorRegister, validatorLogin }

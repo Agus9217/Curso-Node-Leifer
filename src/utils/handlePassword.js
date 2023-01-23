@@ -7,7 +7,7 @@ const encrypt = async (passwordPlain) => {
 
 const compare = async (passwordPlain, hashPassword) => {
   return await bcrypjs.compare(passwordPlain, hashPassword)
-}
+};
 
 
 module.exports = { encrypt, compare }
